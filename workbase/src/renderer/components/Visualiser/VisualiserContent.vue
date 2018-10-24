@@ -13,9 +13,7 @@
             </div>
 
             <keep-alive>
-              <template v-for="tab in Array.from(tabs.keys())">
-                  <component v-if="currentTab === tab" :is="visTab" :tabId="tab" :key="tab"></component>
-              </template>
+                  <component :is="tabs.get(currentTab)"></component>
             </keep-alive>
 
         </div>
@@ -55,6 +53,7 @@
 
 <script>
 
+import Vue from 'vue';
 import VisTab from './VisTab.vue';
 
 export default {
@@ -62,23 +61,34 @@ export default {
   components: { VisTab },
   data() {
     return {
-      currentTab: 0,
-      tabs: new Map([[0, 0]]),
+      currentTab: undefined,
+      tabs: new Map(),
       visTab: 'VisTab',
     };
+  },
+  created() {
+    const Ciao = Vue.extend(VisTab);
+    // const lol = new Ciao({ propsData: { tabId: 0 }, store: this.$store });
+    debugger;
+    this.tabs.set(0, Ciao);
+    const Ciao1 = Vue.extend(VisTab);
+
+    this.tabs.set(1, Ciao1);
+    this.currentTab = 0;
   },
   methods: {
     toggleTab(tab) {
       this.currentTab = tab;
     },
     newTab() {
-      const newTabId = Math.max(...Array.from(this.tabs.keys())) + 1;
-      this.tabs.set(newTabId, newTabId);
+      const newTabId = Math.max(...Array.from(this.tabs.values())) + 1;
+      this.tabs.add(newTabId);
       this.currentTab = newTabId;
     },
     closeTab(tab) {
-      if (this.currentTab === tab) this.currentTab = Array.from(this.tabs.keys())[0];
+      if (this.currentTab === tab) this.currentTab = Array.from(this.tabs.values())[0];
       this.tabs.delete(tab);
+      this.tabs = new Set(Array.from(this.tabs.values()));
     },
   },
 };

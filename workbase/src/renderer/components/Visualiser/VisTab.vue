@@ -64,9 +64,15 @@ export default {
   },
   props: ['tabId'],
   beforeCreate() {
+    debugger;
+    this.$options.propsData.tabId = Math.random().toString(36).substring(7);
+    debugger;
     const namespace = `tab-${this.$options.propsData.tabId}`;
 
     this.$store.registerModule(namespace, { namespaced: true, getters, state: TabState, mutations, actions });
+  },
+  created() {
+    debugger;
   },
   beforeDestroy() {
     this.$store.unregisterModule(`tab-${this.$options.propsData.tabId}`);
