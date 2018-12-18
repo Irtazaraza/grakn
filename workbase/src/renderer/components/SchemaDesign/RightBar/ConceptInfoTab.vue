@@ -3,20 +3,21 @@
         <div class="tab-header noselect">Concept Info</div>
         <identity-panel></identity-panel>
         <attributes-panel></attributes-panel>
+        <roles-panel></roles-panel>
     </div>
 </template>
 <script>
   import IdentityPanel from './ConceptInfoTab/IdentityPanel';
   import AttributesPanel from './ConceptInfoTab/AttributesPanel';
-
+  import RolesPanel from './ConceptInfoTab/RolesPanel';
 
   export default {
     name: 'ConceptInfoTab',
-    components: { IdentityPanel, AttributesPanel },
+    components: { IdentityPanel, AttributesPanel, RolesPanel },
   };
 </script>
 <style scoped>
     .node-tab-content {
-        width: 214.14px;
+        width: 201px;
     }
 </style>
